@@ -1,60 +1,45 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import Head from "next/head";
-import Header from "../components/Header";
-import Display from "../components/Display";
-import Form from "../components/Form";
+import Header from "../src/components/Header";
+import Bibliotheque from "../src/components/Display/Bibliotheque";
+import Authors from "../src/components/Display/Authors";
+import Form from "../src/components/FormNewBook";
+import { useQuery } from "react-query";
+import Collections from "../src/components/Display/Collections";
+import { useState } from "react";
 
-interface IFormInput {
-  title: string;
-  authorId: string;
-  collectionId: string;
-  year: Date;
-}
-
-type Book = {
-  id: string;
-  title: string;
-  author: Author;
-  collection: Collection;
-  year: Date;
+const getAllBooks = async () => {
+  const allBooks = await axios.get("http://localhost:5000/api/v1/books");
+  return allBooks.data;
 };
 
-type Collection = {
-  id: string;
-  name: string;
+const getAllAuthors = async () => {
+  const allAuthors = await axios.get("http://localhost:5000/api/v1/authors");
+  return allAuthors.data;
 };
 
-type Author = {
-  id: string;
-  firstname: string;
-  lastname: string | null;
+const getAllCollections = async () => {
+  const allCollections = await axios.get(
+    "http://localhost:5000/api/v1/collections"
+  );
+  return allCollections.data;
 };
 
 export default function Home() {
-  // const urlPost = "http://localhost:5000/api/v1/books";
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const onSubmit = (data) => console.log("data");
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isAddBookOpen, setIsAddBookOpen] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<Book[]>([]);
+  const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
+  const { data: allAuthors } = useQuery("authors", getAllAuthors);
+  const { data: allCollections } = useQuery("collections", getAllCollections);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { data: response } = await axios.get(
-          "http://localhost:5000/api/v1/books?author=true&collection=true"
-        );
-        setData(response);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Something bad happen</p>;
+  }
 
   return (
     <div>
@@ -66,10 +51,29 @@ export default function Home() {
 
       <main className="">
         <Header />
-        <div className=" text-center">
-          <Display data={data} loading={loading} />
-          <Form data={data} loading={loading} />
-        </div>
+        <Bibliotheque
+          allBooks={allBooks}
+          allAuthors={allAuthors}
+          allCollections={allCollections}
+        />
+        <Authors allAuthors={allAuthors} />
+        <Collections allCollections={allCollections} />
+        <h2
+          className="text-3xl text-center"
+          onClick={() => setIsAddOpen(!isAddOpen)}
+        >
+          ADD
+        </h2>
+        {isAddOpen && (
+          <div className="flex w-full justify-around my-5">
+            <p onClick={() => setIsAddBookOpen(!isAddBookOpen)}>a book</p>
+            <p>an author</p>
+            <p>a collection</p>
+          </div>
+        )}
+        {isAddBookOpen && (
+          <Form allAuthors={allAuthors} allCollections={allCollections} />
+        )}
       </main>
     </div>
   );
