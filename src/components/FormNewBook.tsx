@@ -11,13 +11,12 @@ interface IProps {
 
 function FormNewBook({ allAuthors, allCollections }: IProps) {
   const { register, handleSubmit } = useForm<TBook>();
+  const client = useQueryClient();
 
   const urlPost = "http://localhost:5000/api/v1/books";
 
-  const client = useQueryClient();
-
-  const onSubmit = (book: TBook) => {
-    axios
+  const onSubmit = async (book: TBook) => {
+    await axios
       .post(urlPost, {
         title: book.title,
         authorId: book.authorId,

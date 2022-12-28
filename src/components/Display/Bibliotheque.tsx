@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { TBook, TAuthor, TCollection } from "../../../types/globals";
 import Modal from "../Modal";
@@ -48,22 +49,21 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
     });
 
   // to submit updated book
-
-  const [data, setData] = useState([]);
+  const { register, handleSubmit } = useForm<TBook>();
+  const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     console.log(data);
   }, [data]);
 
-  const updateOneBook = async (id: string) => {
-    const body = {
-      title: "bete de test",
-      authorId: "f143be03-4d13-4528-9fa8-94dd628ae01e",
-      collectionId: "33482ac6-73a3-428f-b81a-0dd6c8ff84b4",
-    };
-    const response = await axios
-      .put(`http://localhost:5000/api/v1/books/${id}`, body)
-      .then(() => client.invalidateQueries(["book"]));
+  const onSubmit = async (id: string, book: TBook) => {
+    await axios
+      .put(`http://localhost:5000/api/v1/books/${id}`, {
+        title: book.title,
+        authorId: book.authorId,
+        collectionId: book.collectionId,
+      })
+      .then(() => client.invalidateQueries("book"));
   };
 
   return (
@@ -91,17 +91,43 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
               >
                 X
               </td>
-              <td
-                onClick={() =>
-                  updateOneBook("cd9000c2-16c0-4108-8d2f-2f667414cedd")
-                }
-              >
-                M
-              </td>
             </tr>
           ))}
         </table>
       )}
+      {/* update form */}
+      <form className="flex flex-col">
+        <label>title</label>
+        <input
+          type="text"
+          placeholder={data.title}
+          {...register("title", { required: true })}
+        />
+        <label>author</label>
+        <select {...register("authorId", { required: true })}>
+          <option value={data.authorId}>{authorName(data.authorId)}</option>
+          {allAuthors.map(
+            (author) =>
+              data.authorId !== author.id && (
+                <option value={author.id}>
+                  {author.firstname} {author.lastname}
+                </option>
+              )
+          )}
+        </select>
+        <label>collection</label>
+        <select {...register("collectionId", { required: true })}>
+          <option value={data.collectionId}>
+            {collectionName(data.collectionId)}
+          </option>
+          {allCollections.map(
+            (collection) =>
+              data.collectionId !== collection.id && (
+                <option value={collection.id}>{collection.name}</option>
+              )
+          )}
+        </select>
+      </form>
       <Modal isShowing={isShowing} hide={toggle} title="Update">
         <form>
           <div className="form-group">
