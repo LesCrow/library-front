@@ -30,7 +30,7 @@ function FormNewBook({ allAuthors, allCollections }: IProps) {
     <div className="my-10  flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col item-center bg-blue-200 border border-blue-400 rounded-lg w-[80%]"
+        className="flex flex-col item-center border rounded-lg w-[80%]"
       >
         <label className="my-5 m-auto">Title</label>
         <input

@@ -3,10 +3,13 @@ import Head from "next/head";
 import Header from "../src/components/Header";
 import Bibliotheque from "../src/components/Display/Bibliotheque";
 import Authors from "../src/components/Display/Authors";
-import Form from "../src/components/FormNewBook";
+
 import { useQuery } from "react-query";
 import Collections from "../src/components/Display/Collections";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import FormNewBook from "../src/components/FormNewBook";
+import FormNewAuthor from "../src/components/FormNewAuthor";
+import FormNewCollection from "../src/components/FormNewCollection";
 
 const getAllBooks = async () => {
   const allBooks = await axios.get("http://localhost:5000/api/v1/books");
@@ -28,6 +31,30 @@ const getAllCollections = async () => {
 export default function Home() {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
+  const [isAddAuthorOpen, setIsAddAuthorOpen] = useState(false);
+  const [isAddCollectionOpen, setIsAddCollectionOpen] = useState(false);
+
+  useEffect(() => {
+    isAddBookOpen && setIsAddAuthorOpen(false);
+    setIsAddCollectionOpen(false);
+  }, [isAddBookOpen]);
+
+  useEffect(() => {
+    isAddAuthorOpen && setIsAddBookOpen(false);
+    setIsAddCollectionOpen(false);
+  }, [isAddAuthorOpen]);
+
+  useEffect(() => {
+    isAddCollectionOpen && setIsAddBookOpen(false);
+    setIsAddAuthorOpen(false);
+  }, [isAddCollectionOpen]);
+
+  useEffect(() => {
+    !isAddOpen && setIsAddBookOpen(false);
+    setIsAddAuthorOpen(false);
+    setIsAddBookOpen(false);
+    setIsAddCollectionOpen(false);
+  }, [isAddOpen]);
 
   const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
   const { data: allAuthors } = useQuery("authors", getAllAuthors);
@@ -49,7 +76,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="">
+      <main className="bg-background h-screen">
         <Header />
         <Bibliotheque
           allBooks={allBooks}
@@ -58,22 +85,28 @@ export default function Home() {
         />
         <Authors allAuthors={allAuthors} />
         <Collections allCollections={allCollections} />
-        <h2
-          className="text-3xl text-center"
-          onClick={() => setIsAddOpen(!isAddOpen)}
-        >
+        <h2 className="w-fit" onClick={() => setIsAddOpen(!isAddOpen)}>
           ADD
         </h2>
         {isAddOpen && (
           <div className="flex w-full justify-around my-5">
             <p onClick={() => setIsAddBookOpen(!isAddBookOpen)}>a book</p>
-            <p>an author</p>
-            <p>a collection</p>
+            <p onClick={() => setIsAddAuthorOpen(!isAddAuthorOpen)}>
+              an author
+            </p>
+            <p onClick={() => setIsAddCollectionOpen(!isAddCollectionOpen)}>
+              a collection
+            </p>
           </div>
         )}
         {isAddBookOpen && (
-          <Form allAuthors={allAuthors} allCollections={allCollections} />
+          <FormNewBook
+            allAuthors={allAuthors}
+            allCollections={allCollections}
+          />
         )}
+        {isAddAuthorOpen && <FormNewAuthor />}
+        {isAddCollectionOpen && <FormNewCollection />}
       </main>
     </div>
   );

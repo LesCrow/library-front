@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-black;
+  }
+
+  h2 {
+    @apply text-black;
+    @apply text-3xl;
+  }
+  p,
+  th,
+  td {
+    @apply text-black;
+  }
+  input {
+    @apply border-black;
+  }
+  form {
+    @apply border;
+  }
+}

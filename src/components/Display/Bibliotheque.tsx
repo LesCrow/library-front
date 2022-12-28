@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 
-import { TBook, TAuthor, TCollection } from "../../types/globals";
+import { TBook, TAuthor, TCollection } from "../../../types/globals";
 interface IProps {
   allBooks: TBook[];
   allAuthors: TAuthor[];
@@ -39,9 +39,9 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
 
   return (
     <div>
-      <p className="text-3xl my-10 w-1/2" onClick={() => setIsOpen(!isOpen)}>
+      <h2 className="text-3xl my-10 w-fit " onClick={() => setIsOpen(!isOpen)}>
         Bibliothèque
-      </p>
+      </h2>
       {isOpen && (
         <table className="border w-full my-5">
           <tr>
@@ -57,7 +57,7 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
 
               <button
                 onClick={() => deleteOneBook(book.id)}
-                className="border text-red-600"
+                className=" text-red-600"
               >
                 X
               </button>
