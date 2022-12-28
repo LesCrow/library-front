@@ -3,13 +3,14 @@ import Head from "next/head";
 import Header from "../src/components/Header";
 import Bibliotheque from "../src/components/Display/Bibliotheque";
 import Authors from "../src/components/Display/Authors";
-
 import { useQuery } from "react-query";
 import Collections from "../src/components/Display/Collections";
 import { useState, useEffect } from "react";
 import FormNewBook from "../src/components/FormNewBook";
 import FormNewAuthor from "../src/components/FormNewAuthor";
 import FormNewCollection from "../src/components/FormNewCollection";
+import useModal from "../src/components/useModal";
+import Modal from "../src/components/Modal";
 
 const getAllBooks = async () => {
   const allBooks = await axios.get("http://localhost:5000/api/v1/books");
@@ -29,6 +30,14 @@ const getAllCollections = async () => {
 };
 
 export default function Home() {
+  // Modal
+  const { isShowing: isLoginFormShowed, toggle: toggleLoginForm } = useModal();
+  const {
+    isShowing: isRegistrationFormShowed,
+    toggle: toggleRegistrationForm,
+  } = useModal();
+
+  // Bibliothèque, authors, collection and add form displayer
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [isAddAuthorOpen, setIsAddAuthorOpen] = useState(false);
@@ -56,6 +65,7 @@ export default function Home() {
     setIsAddCollectionOpen(false);
   }, [isAddOpen]);
 
+  // UseQuery
   const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
   const { data: allAuthors } = useQuery("authors", getAllAuthors);
   const { data: allCollections } = useQuery("collections", getAllCollections);
@@ -69,6 +79,50 @@ export default function Home() {
   }
 
   return (
+    // <>
+    //   <div>
+    //     <button onClick={toggleLoginForm}>Login</button>
+    //     <button onClick={toggleRegistrationForm}>Register</button>
+    //     <Modal
+    //       isShowing={isLoginFormShowed}
+    //       hide={toggleLoginForm}
+    //       title="login"
+    //     >
+    //       <form>
+    //         <div className="form-group">
+    //           <input type="text" placeholder="Username" />
+    //         </div>
+    //         <div className="form-group">
+    //           <input type="text" placeholder="Password" />
+    //         </div>
+    //         <div className="form-group">
+    //           <input type="submit" value="Login" />
+    //         </div>
+    //       </form>
+    //     </Modal>
+    //     <Modal
+    //       isShowing={isRegistrationFormShowed}
+    //       hide={toggleRegistrationForm}
+    //       title="Register"
+    //     >
+    //       <form>
+    //         <div className="form-group">
+    //           <input type="text" placeholder="Email Address" />
+    //         </div>
+    //         <div className="form-group">
+    //           <input type="text" placeholder="Username" />
+    //         </div>
+    //         <div className="form-group">
+    //           <input type="text" placeholder="Password" />
+    //         </div>
+    //         <div className="form-group">
+    //           <input type="submit" value="Register" />
+    //         </div>
+    //       </form>
+    //     </Modal>
+    //   </div>
+    // </>
+    /////////////////////////////////
     <div>
       <Head>
         <title>Wild Library</title>
