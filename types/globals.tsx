@@ -15,3 +15,9 @@ export type TAuthor = {
   firstname: string;
   lastname: string | null;
 };
+
+export type TUser = {
+  id: string;
+  email: string;
+  password: string;
+};

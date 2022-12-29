@@ -3,7 +3,7 @@ import Head from "next/head";
 import Header from "../src/components/Header";
 import Bibliotheque from "../src/components/Display/Bibliotheque";
 import Authors from "../src/components/Display/Authors";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import Genre from "../src/components/Display/Genre";
 import { useState, useEffect } from "react";
 import FormNewBook from "../src/components/FormNewBook";
@@ -11,9 +11,10 @@ import FormNewAuthor from "../src/components/FormNewAuthor";
 import FormNewGenre from "../src/components/FormNewGenre";
 import useModal from "../src/components/useModal";
 import Modal from "../src/components/Modal";
+import { useForm } from "react-hook-form";
+import { TUser } from "../types/globals";
 
-import pictoBook from "../public/picto-book.png";
-
+// Get books, authors & collections
 const getAllBooks = async () => {
   try {
     const allBooks = await axios.get("http://localhost:5000/api/v1/books");
@@ -50,6 +51,22 @@ export default function Home() {
     isShowing: isRegistrationFormShowed,
     toggle: toggleRegistrationForm,
   } = useModal();
+
+  // Form
+  const { register, handleSubmit } = useForm<TUser>();
+
+  const urlPostUser = "http://localhost:5000/api/v1/auth/signup";
+
+  const client = useQueryClient();
+
+  const onSubmit = (user: TUser) => {
+    axios
+      .post(urlPostUser, {
+        email: user.email,
+        password: user.password,
+      })
+      .then(() => client.invalidateQueries);
+  };
 
   // Bibliothèque, authors, collection and add form displayer
   const [isAddOpen, setIsAddOpen] = useState(false);
@@ -110,50 +127,58 @@ export default function Home() {
         </Head>
 
         <main className="bg-[#1F293D] h-full">
-          {/* <img src={banniere.src} alt="library" className="object-cover" /> */}
-          {/* <>
-        <div>
-          <button onClick={toggleLoginForm}>Login</button>
-          <button onClick={toggleRegistrationForm}>Register</button>
-          <Modal
-            isShowing={isLoginFormShowed}
-            hide={toggleLoginForm}
-            title="login"
-          >
-            <form>
-              <div className="form-group">
-                <input type="text" placeholder="Username" />
-              </div>
-              <div className="form-group">
-                <input type="text" placeholder="Password" />
-              </div>
-              <div className="form-group">
-                <input type="submit" value="Login" />
-              </div>
-            </form>
-          </Modal>
-          <Modal
-            isShowing={isRegistrationFormShowed}
-            hide={toggleRegistrationForm}
-            title="Register"
-          >
-            <form>
-              <div className="form-group">
-                <input type="text" placeholder="Email Address" />
-              </div>
-              <div className="form-group">
-                <input type="text" placeholder="Username" />
-              </div>
-              <div className="form-group">
-                <input type="text" placeholder="Password" />
-              </div>
-              <div className="form-group">
-                <input type="submit" value="Register" />
-              </div>
-            </form>
-          </Modal>
-        </div>
-      </> */}
+          {/* Modal */}
+          <>
+            <div>
+              <button onClick={toggleLoginForm}>Login</button>
+              {/* <button onClick={toggleRegistrationForm}>Register</button> */}
+              <Modal
+                isShowing={isLoginFormShowed}
+                hide={toggleLoginForm}
+                title="Login"
+              >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      placeholder="Email"
+                      {...register("email", { required: true })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      placeholder="Password"
+                      {...register("password", { required: true })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input type="submit" value="Submit" />
+                  </div>
+                </form>
+              </Modal>
+              {/* <Modal
+                isShowing={isRegistrationFormShowed}
+                hide={toggleRegistrationForm}
+                title="Register"
+              >
+                <form>
+                  <div className="form-group">
+                    <input type="text" placeholder="Email Address" />
+                  </div>
+                  <div className="form-group">
+                    <input type="text" placeholder="Username" />
+                  </div>
+                  <div className="form-group">
+                    <input type="text" placeholder="Password" />
+                  </div>
+                  <div className="form-group">
+                    <input type="submit" value="Register" />
+                  </div>
+                </form>
+              </Modal> */}
+            </div>
+          </>
           <Header />
           <div className="p-5">
             <Bibliotheque
