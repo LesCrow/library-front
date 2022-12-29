@@ -5,14 +5,14 @@ interface IProps {
   allCollections: TCollection[];
 }
 
-function Collections({ allCollections }: IProps) {
+function Genre({ allCollections }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       <h2 className="text-3xl my-10 w-fit" onClick={() => setIsOpen(!isOpen)}>
-        Collections
+        Genre
       </h2>
-      <ul>
+      <ul className="mb-10">
         {isOpen &&
           allCollections.map((collection) => <li>{collection.name}</li>)}
       </ul>
@@ -20,4 +20,4 @@ function Collections({ allCollections }: IProps) {
   );
 }
 
-export default Collections;
+export default Genre;
