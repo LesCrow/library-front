@@ -13,20 +13,32 @@ import useModal from "../src/components/useModal";
 import Modal from "../src/components/Modal";
 
 const getAllBooks = async () => {
-  const allBooks = await axios.get("http://localhost:5000/api/v1/books");
-  return allBooks.data;
+  try {
+    const allBooks = await axios.get("http://localhost:5000/api/v1/books");
+    return allBooks.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllAuthors = async () => {
-  const allAuthors = await axios.get("http://localhost:5000/api/v1/authors");
-  return allAuthors.data;
+  try {
+    const allAuthors = await axios.get("http://localhost:5000/api/v1/authors");
+    return allAuthors.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllCollections = async () => {
-  const allCollections = await axios.get(
-    "http://localhost:5000/api/v1/collections"
-  );
-  return allCollections.data;
+  try {
+    const allCollections = await axios.get(
+      "http://localhost:5000/api/v1/collections"
+    );
+    return allCollections.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default function Home() {

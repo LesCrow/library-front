@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
+import { json } from "stream/consumers";
 import { TBook, TAuthor, TCollection } from "../../../types/globals";
 import Modal from "../Modal";
 import useModal from "../useModal";
@@ -49,16 +50,25 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
     });
 
   // to submit updated book
+
+  const [oldBookData, setOldBookData] = useState<any>([]);
+  const [newTitle, setNewTitle] = useState<string>("");
+  const [newAuthorId, setNewAuthorId] = useState<string>("");
+  const [newCollectionId, setNewCollectionId] = useState<string>("");
+
+  useEffect(() => {}, [oldBookData]);
   const { register, handleSubmit } = useForm<TBook>();
-  const [data, setData] = useState<any>([]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  const onSubmit = async (id: string, book: TBook) => {
+  const onSubmit = async (
+    // id: string,
+    // title: string,
+    // authorId: string,
+    // collectionId: string
+    book: TBook
+  ) => {
+    console.log("ok");
     await axios
-      .put(`http://localhost:5000/api/v1/books/${id}`, {
+      .put(`http://localhost:5000/api/v1/books/${oldBookData.id}`, {
         title: book.title,
         authorId: book.authorId,
         collectionId: book.collectionId,
@@ -80,7 +90,10 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
           </tr>
           {allBooks.map((book) => (
             <tr className="text-center" key={book.id}>
-              <td className="cursor-pointer" onClick={() => setData(book)}>
+              <td
+                className="cursor-pointer"
+                onClick={() => setOldBookData(book)}
+              >
                 {book.title}
               </td>
               <td>{authorName(book.authorId)}</td>
@@ -96,19 +109,25 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
         </table>
       )}
       {/* update form */}
-      <form className="flex flex-col">
+      <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
         <label>title</label>
         <input
           type="text"
-          placeholder={data.title}
+          placeholder={oldBookData.title}
           {...register("title", { required: true })}
+          // onChange={(e) => setNewTitle(e.target.value)}
         />
         <label>author</label>
-        <select {...register("authorId", { required: true })}>
-          <option value={data.authorId}>{authorName(data.authorId)}</option>
+        <select
+          {...register("authorId", { required: true })}
+          // onChange={(e) => setNewAuthorId(e.target.value)}
+        >
+          <option value={oldBookData.authorId}>
+            {authorName(oldBookData.authorId)}
+          </option>
           {allAuthors.map(
             (author) =>
-              data.authorId !== author.id && (
+              oldBookData.authorId !== author.id && (
                 <option value={author.id}>
                   {author.firstname} {author.lastname}
                 </option>
@@ -116,18 +135,23 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
           )}
         </select>
         <label>collection</label>
-        <select {...register("collectionId", { required: true })}>
-          <option value={data.collectionId}>
-            {collectionName(data.collectionId)}
+        <select
+          {...register("collectionId", { required: true })}
+          // onChange={(e) => setNewCollectionId(e.target.value)}
+        >
+          <option value={oldBookData.collectionId}>
+            {collectionName(oldBookData.collectionId)}
           </option>
           {allCollections.map(
             (collection) =>
-              data.collectionId !== collection.id && (
+              oldBookData.collectionId !== collection.id && (
                 <option value={collection.id}>{collection.name}</option>
               )
           )}
         </select>
+        <button type="submit">Submit</button>
       </form>
+      {/* modal */}
       <Modal isShowing={isShowing} hide={toggle} title="Update">
         <form>
           <div className="form-group">
