@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { TAuthor, TBook, TCollection } from "../../types/globals";
 
-function FormNewCollection() {
+function FormNewGenre() {
   const { register, handleSubmit } = useForm<TCollection>();
 
   const urlPost = "http://localhost:5000/api/v1/collections";
@@ -41,4 +41,4 @@ function FormNewCollection() {
   );
 }
 
-export default FormNewCollection;
+export default FormNewGenre;

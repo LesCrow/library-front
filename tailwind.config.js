@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        marker: ["Permanent Marker"],
+        roboto: ["Roboto"],
+      },
       colors: {
         background: "#ffffff",
         darkGreen: "#283618",

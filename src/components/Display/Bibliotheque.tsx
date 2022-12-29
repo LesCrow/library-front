@@ -75,11 +75,7 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
             <th>Collection</th>
           </tr>
           {allBooks.map((book) => (
-            <tr
-              className="text-center"
-              key={book.id}
-              onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}
-            >
+            <tr className="text-center" key={book.id}>
               <td
                 className="cursor-pointer"
                 onClick={() => setOldBookData(book)}
@@ -94,48 +90,54 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
               >
                 X
               </td>
+              <td onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}>
+                Modify
+              </td>
             </tr>
           ))}
         </table>
       )}
+
       {/* update form */}
-      {isupdateABookOpen && (
-        <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-          <label>title</label>
-          <input
-            type="text"
-            placeholder={oldBookData.title}
-            {...register("title", { required: true })}
-          />
-          <label>author</label>
-          <select {...register("authorId", { required: true })}>
-            <option value={oldBookData.authorId}>
-              {authorName(oldBookData.authorId)}
-            </option>
-            {allAuthors.map(
-              (author) =>
-                oldBookData.authorId !== author.id && (
-                  <option value={author.id}>
-                    {author.firstname} {author.lastname}
-                  </option>
-                )
-            )}
-          </select>
-          <label>collection</label>
-          <select {...register("collectionId", { required: true })}>
-            <option value={oldBookData.collectionId}>
-              {collectionName(oldBookData.collectionId)}
-            </option>
-            {allCollections.map(
-              (collection) =>
-                oldBookData.collectionId !== collection.id && (
-                  <option value={collection.id}>{collection.name}</option>
-                )
-            )}
-          </select>
-          <button type="submit">Submit</button>
-        </form>
-      )}
+      <div className="flex w-full justify-center">
+        {isupdateABookOpen && (
+          <form className="flex flex-col p-5" onSubmit={handleSubmit(onSubmit)}>
+            <label>title</label>
+            <input
+              type="text"
+              placeholder={oldBookData.title}
+              {...register("title", { required: true })}
+            />
+            <label>author</label>
+            <select {...register("authorId", { required: true })}>
+              <option value={oldBookData.authorId}>
+                {authorName(oldBookData.authorId)}
+              </option>
+              {allAuthors.map(
+                (author) =>
+                  oldBookData.authorId !== author.id && (
+                    <option value={author.id}>
+                      {author.firstname} {author.lastname}
+                    </option>
+                  )
+              )}
+            </select>
+            <label>collection</label>
+            <select {...register("collectionId", { required: true })}>
+              <option value={oldBookData.collectionId}>
+                {collectionName(oldBookData.collectionId)}
+              </option>
+              {allCollections.map(
+                (collection) =>
+                  oldBookData.collectionId !== collection.id && (
+                    <option value={collection.id}>{collection.name}</option>
+                  )
+              )}
+            </select>
+            <button type="submit">Submit</button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
