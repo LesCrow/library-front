@@ -79,7 +79,7 @@ function Header() {
         </div>
       </div>
 
-      <h1 className="text-center mb-10 m-auto py-5 ">
+      <h1 className="text-center mb-10 m-auto py-10 ">
         Welcome to the Wild Library
       </h1>
 
@@ -132,7 +132,7 @@ function Header() {
           <Modal
             isShowing={isRegistrationFormShowed}
             hide={toggleRegistrationForm}
-            title="SIGN UP"
+            title="Sign up"
           >
             <form
               onSubmit={handleSubmit(onSubmit)}

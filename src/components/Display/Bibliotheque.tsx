@@ -49,8 +49,6 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
   const [oldBookData, setOldBookData] = useState<any>([]);
   const [isupdateABookOpen, setIsUpdateABookOpen] = useState<boolean>(false);
 
-  const updateABookDisplayer = () => {};
-
   const onSubmit = async (book: TBook) => {
     console.log("ok");
     await axios
@@ -63,16 +61,20 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
   };
 
   return (
-    <div>
-      <h2 className="text-3xl my-10 w-fit " onClick={() => setIsOpen(!isOpen)}>
-        Bibliothèque
+    <div className="w-full flex flex-col items-center py-10">
+      {/* Bibliothèque table */}
+      <h2
+        className="text-background text-3xl w-fit cursor-pointer font-montserrat hover:underline"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        BIBLIOTHEQUE
       </h2>
       {isOpen && (
-        <table className="border w-full my-5">
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Genre</th>
+        <table className="border-2  border-background w-5/6   my-5">
+          <tr className="border rounded-sm border-black">
+            <th className="text-background ">Title</th>
+            <th className="text-background ">Author</th>
+            <th className="text-background ">Genre</th>
           </tr>
           {allBooks.map((book) => (
             <tr className="text-center" key={book.id}>

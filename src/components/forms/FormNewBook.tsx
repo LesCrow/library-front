@@ -26,31 +26,34 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
   };
 
   return (
-    <div className="my-10  flex justify-center">
+    <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col item-center "
+        className="flex flex-col bg-[#d4bfbf] border-2 border-black"
       >
-        <label className="my-5 m-auto">Title</label>
+        <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
+          ADD A BOOK
+        </h3>
+        <label className="my-5 m-auto font-montserrat">Title</label>
         <input
-          className="w-[80%] rounded-full m-auto"
+          className=" w-[80%] rounded-full m-auto font-montserrat text-center"
           type="text"
           {...register("title", { required: true })}
         />
-        <label className="my-5 m-auto">Author</label>
+        <label className="my-5 m-auto  font-montserrat">Author</label>
         <select
-          className="w-[80%] h-6 m-auto rounded-full bg-white"
+          className="w-[80%] h-6 m-auto rounded-full bg-white font-montserrat text-center"
           {...register("authorId", { required: true })}
         >
           {allAuthors.map((item) => (
-            <option value={item.id}>
+            <option value={item.id} className="font-montserrat">
               {item.firstname} {item.lastname}
             </option>
           ))}
         </select>
-        <label className=" my-5 m-auto">Genre</label>
+        <label className="my-5 m-auto font-montserrat">Genre</label>
         <select
-          className="w-[80%] h-6 m-auto rounded-full bg-white"
+          className="w-[80%] h-6 m-auto rounded-full bg-white font-montserrat text-center"
           {...register("genreId", { required: true })}
         >
           {allGenres.map((item) => (
@@ -58,8 +61,9 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
           ))}
         </select>
         <input
-          type="submit"
-          className="text-white border w-[40%] rounded-full bg-blue-600 p-2 m-auto my-10"
+          type="button"
+          value="Submit"
+          className="text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
         />
       </form>
     </div>

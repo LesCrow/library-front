@@ -6,12 +6,13 @@ import Authors from "../src/components/Display/Authors";
 import { useQuery, useQueryClient } from "react-query";
 import Genre from "../src/components/Display/Genre";
 import { useState, useEffect } from "react";
-import FormNewBook from "../src/components/forms/FormNewAuthor";
-import FormNewAuthor from "../src/components/forms/FormNewGenre";
+import FormNewBook from "../src/components/forms/FormNewBook";
+import FormNewAuthor from "../src/components/forms/FormNewAuthor";
 import FormNewGenre from "../src/components/forms/FormNewGenre";
 
 import { useForm } from "react-hook-form";
 import { TUser } from "../types/globals";
+import Add from "../src/components/forms/Add";
 
 // Get books, authors & genres
 const getAllBooks = async () => {
@@ -42,34 +43,6 @@ const getAllGenres = async () => {
 };
 
 export default function Home() {
-  // Bibliothèque, authors, collection and add form displayer
-  const [isAddOpen, setIsAddOpen] = useState(false);
-  const [isAddBookOpen, setIsAddBookOpen] = useState(false);
-  const [isAddAuthorOpen, setIsAddAuthorOpen] = useState(false);
-  const [isAddCollectionOpen, setIsAddCollectionOpen] = useState(false);
-
-  useEffect(() => {
-    isAddBookOpen && setIsAddAuthorOpen(false);
-    setIsAddCollectionOpen(false);
-  }, [isAddBookOpen]);
-
-  useEffect(() => {
-    isAddAuthorOpen && setIsAddBookOpen(false);
-    setIsAddCollectionOpen(false);
-  }, [isAddAuthorOpen]);
-
-  useEffect(() => {
-    isAddCollectionOpen && setIsAddBookOpen(false);
-    setIsAddAuthorOpen(false);
-  }, [isAddCollectionOpen]);
-
-  useEffect(() => {
-    !isAddOpen && setIsAddBookOpen(false);
-    setIsAddAuthorOpen(false);
-    setIsAddBookOpen(false);
-    setIsAddCollectionOpen(false);
-  }, [isAddOpen]);
-
   // UseQuery
   const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
   const { data: allAuthors } = useQuery("authors", getAllAuthors);
@@ -82,6 +55,8 @@ export default function Home() {
   if (error) {
     return <p>Something bad happen</p>;
   }
+
+  // Register form state
 
   return (
     <div>
@@ -100,7 +75,19 @@ export default function Home() {
       </Head>
 
       <main>
-        <div className="p-5">
+        <div className="bg-background py-16 ">
+          <p className=" text-white w-2/3 m-auto py-10 text-center ">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi
+            deleniti nemo eius corrupti molestias reiciendis sint impedit animi
+            itaque, autem neque et accusantium praesentium, velit quis
+            laboriosam asperiores culpa exercitationem? Lorem ipsum dolor, sit
+            amet consectetur adipisicing elit. Commodi deleniti nemo eius
+            corrupti molestias reiciendis sint impedit animi itaque, autem neque
+            et accusantium praesentium, velit quis laboriosam asperiores culpa
+            exercitationem?
+          </p>
+        </div>
+        <div className=" py-10 w-full flex flex-col items-center bg-slate-300 ">
           <Bibliotheque
             allBooks={allBooks}
             allAuthors={allAuthors}
@@ -108,25 +95,7 @@ export default function Home() {
           />
           <Authors allAuthors={allAuthors} />
           <Genre allGenres={allGenres} />
-          <h2 className="w-fit" onClick={() => setIsAddOpen(!isAddOpen)}>
-            ADD +
-          </h2>
-          {isAddOpen && (
-            <div className="flex w-full justify-around my-5">
-              <p onClick={() => setIsAddBookOpen(!isAddBookOpen)}>A book</p>
-              <p onClick={() => setIsAddAuthorOpen(!isAddAuthorOpen)}>
-                An author
-              </p>
-              <p onClick={() => setIsAddCollectionOpen(!isAddCollectionOpen)}>
-                A collection
-              </p>
-            </div>
-          )}
-          {isAddBookOpen && (
-            <FormNewBook allAuthors={allAuthors} allGenres={allGenres} />
-          )}
-          {isAddAuthorOpen && <FormNewAuthor />}
-          {isAddCollectionOpen && <FormNewGenre />}
+          <Add allAuthors={allAuthors} allGenres={allGenres} />
         </div>
       </main>
     </div>

@@ -8,13 +8,17 @@ interface IProps {
 function Genre({ allGenres }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
-      <h2 className="text-3xl my-10 w-fit" onClick={() => setIsOpen(!isOpen)}>
-        Genre
+    <div className="">
+      <h2
+        className="text-background font-montserrat text-3xl w-fit cursor-pointer hover:underline"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        GENRE
       </h2>
-      <ul className="mb-10">
+      <ul className="pt-5">
         {isOpen && allGenres.map((genre) => <li>{genre.name}</li>)}
       </ul>
+      <br />
     </div>
   );
 }

@@ -21,27 +21,31 @@ function FormNewAuthor() {
   };
 
   return (
-    <div className="my-10  flex justify-center">
+    <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col item-center bg-yellow border border-grey rounded-lg w-[50%]"
+        className="flex flex-col bg-[#d4bfbf] border-2 border-black"
       >
-        <label className="my-5 m-auto">First name</label>
+        <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
+          ADD AN AUTHOR
+        </h3>
+        <label className="my-5 m-auto font-montserrat">First name</label>
         <input
-          className="w-[80%] rounded-full m-auto "
+          className="w-[80%] rounded-full m-auto font-montserrat text-center "
           type="text"
           {...register("firstname", { required: true })}
         />
-        <label className="my-5 m-auto">Last name</label>
+        <label className="my-5 m-auto  font-montserrat">Last name</label>
         <input
-          className="w-[80%] rounded-full m-auto"
+          className="w-[80%] rounded-full m-auto font-montserrat text-center"
           type="text"
           {...register("lastname", { required: false })}
         />
 
         <input
           type="submit"
-          className="text-white border w-[40%] rounded-full bg-blue-600 p-2 m-auto my-10"
+          value="Submit"
+          className="text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
         />
       </form>
     </div>

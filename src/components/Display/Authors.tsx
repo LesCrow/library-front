@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TAuthor } from "../../../types/globals";
 import { useQueryClient } from "react-query";
-import axios from "axios";
+import axios, { all } from "axios";
 
 interface IProps {
   allAuthors: TAuthor[];
@@ -18,16 +18,20 @@ function Authors({ allAuthors }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <h2 className="text-3xl my-10 w-fit" onClick={() => setIsOpen(!isOpen)}>
-        Authors
+      <h2
+        className="text-background font-montserrat text-3xl  w-fit cursor-pointer pb-5 hover:underline"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        AUTHORS
       </h2>
-      <ul>
+      <ul className="">
         {isOpen &&
           allAuthors.map((author) => (
             <li>
               {author.firstname} {author.lastname}
             </li>
           ))}
+        <br />
       </ul>
     </div>
   );

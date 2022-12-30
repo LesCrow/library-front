@@ -11,7 +11,7 @@ module.exports = {
         roboto: ["Roboto"],
       },
       colors: {
-        background: "#ffffff",
+        background: "#1F293D",
         darkGreen: "#283618",
         lightGreen: "#606C38",
       },
