@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { TBook, TAuthor, TCollection } from "../../../types/globals";
+import { TBook, TAuthor, TGenres } from "../../../types/globals";
 
 interface IProps {
   allBooks: TBook[];
   allAuthors: TAuthor[];
-  allCollections: TCollection[];
+  allGenres: TGenres[];
 }
 
-function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
+function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
   const client = useQueryClient();
 
   // to display bibliothèque
@@ -28,11 +28,11 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
       }
     });
 
-  // To display collection name
-  const collectionName = (collectionId: string) =>
-    allCollections.map((collection) => {
-      if (collection.id === collectionId) {
-        return <p>{collection.name}</p>;
+  // To display genre name
+  const genreName = (genreId: string) =>
+    allGenres.map((genre) => {
+      if (genre.id === genreId) {
+        return <p>{genre.name}</p>;
       }
     });
 
@@ -57,7 +57,7 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
       .put(`http://localhost:5000/api/v1/books/${oldBookData.id}`, {
         title: book.title,
         authorId: book.authorId,
-        collectionId: book.collectionId,
+        genreId: book.genreId,
       })
       .then(() => client.invalidateQueries("book"));
   };
@@ -72,7 +72,7 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
           <tr>
             <th>Title</th>
             <th>Author</th>
-            <th>Collection</th>
+            <th>Genre</th>
           </tr>
           {allBooks.map((book) => (
             <tr className="text-center" key={book.id}>
@@ -83,7 +83,7 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
                 {book.title}
               </td>
               <td>{authorName(book.authorId)}</td>
-              <td>{collectionName(book.collectionId)}</td>
+              <td>{genreName(book.genreId)}</td>
               <td
                 onClick={() => deleteOneBook(book.id)}
                 className=" text-red-600 cursor-pointer"
@@ -122,15 +122,15 @@ function Bibliotheque({ allBooks, allAuthors, allCollections }: IProps) {
                   )
               )}
             </select>
-            <label>collection</label>
-            <select {...register("collectionId", { required: true })}>
-              <option value={oldBookData.collectionId}>
-                {collectionName(oldBookData.collectionId)}
+            <label>genre</label>
+            <select {...register("genreId", { required: true })}>
+              <option value={oldBookData.genreId}>
+                {genreName(oldBookData.genreId)}
               </option>
-              {allCollections.map(
-                (collection) =>
-                  oldBookData.collectionId !== collection.id && (
-                    <option value={collection.id}>{collection.name}</option>
+              {allGenres.map(
+                (genre) =>
+                  oldBookData.genreId !== genre.id && (
+                    <option value={genre.id}>{genre.name}</option>
                   )
               )}
             </select>

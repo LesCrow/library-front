@@ -2,14 +2,14 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { TAuthor, TBook, TCollection } from "../../types/globals";
+import { TAuthor, TBook, TGenres } from "../../../types/globals";
 
 interface IProps {
   allAuthors: TAuthor[];
-  allCollections: TCollection[];
+  allGenres: TGenres[];
 }
 
-function FormNewBook({ allAuthors, allCollections }: IProps) {
+function FormNewBook({ allAuthors, allGenres }: IProps) {
   const { register, handleSubmit } = useForm<TBook>();
   const client = useQueryClient();
 
@@ -20,7 +20,7 @@ function FormNewBook({ allAuthors, allCollections }: IProps) {
       .post(urlPost, {
         title: book.title,
         authorId: book.authorId,
-        collectionId: book.collectionId,
+        genreId: book.genreId,
       })
       .then(() => client.invalidateQueries("book"));
   };
@@ -48,12 +48,12 @@ function FormNewBook({ allAuthors, allCollections }: IProps) {
             </option>
           ))}
         </select>
-        <label className=" my-5 m-auto">Collection</label>
+        <label className=" my-5 m-auto">Genre</label>
         <select
           className="w-[80%] h-6 m-auto rounded-full bg-white"
-          {...register("collectionId", { required: true })}
+          {...register("genreId", { required: true })}
         >
-          {allCollections.map((item) => (
+          {allGenres.map((item) => (
             <option value={item.id}>{item.name}</option>
           ))}
         </select>

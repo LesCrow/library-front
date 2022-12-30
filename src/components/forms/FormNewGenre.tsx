@@ -2,21 +2,21 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { TAuthor, TBook, TCollection } from "../../types/globals";
+import { TAuthor, TBook, TGenres } from "../../types/globals";
 
 function FormNewGenre() {
-  const { register, handleSubmit } = useForm<TCollection>();
+  const { register, handleSubmit } = useForm<TGenres>();
 
-  const urlPost = "http://localhost:5000/api/v1/collections";
+  const urlPost = "http://localhost:5000/api/v1/genres";
 
   const client = useQueryClient();
 
-  const onSubmit = (collection: TCollection) => {
+  const onSubmit = (genre: TGenres) => {
     axios
       .post(urlPost, {
-        name: collection.name,
+        name: genre.name,
       })
-      .then(() => client.invalidateQueries("collection"));
+      .then(() => client.invalidateQueries("genres"));
   };
 
   return (

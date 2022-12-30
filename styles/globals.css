@@ -8,7 +8,7 @@
 @layer base {
   h1 {
     @apply text-white;
-    @apply font-marker;
+    @apply font-montserrat;
     @apply text-5xl;
   }
 
@@ -19,7 +19,8 @@
   p,
   th,
   td,
-  li {
+  li,
+  button {
     @apply text-white;
     @apply text-xl;
   }
@@ -31,12 +32,11 @@
     @apply border-white;
   }
   form {
-    @apply border;
-    @apply border-black;
     @apply rounded-lg;
     @apply w-1/2;
   }
-  * {
-    @apply font-roboto;
+  .burger-button {
+    @apply w-16;
+    @apply m-10;
   }
 }
