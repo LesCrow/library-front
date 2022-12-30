@@ -13,7 +13,6 @@
   }
 
   h2 {
-    @apply text-white;
     @apply text-3xl;
   }
   p,
@@ -21,16 +20,12 @@
   td,
   li,
   button {
-    @apply text-white;
     @apply text-xl;
   }
   label {
     @apply text-lg;
-    @apply text-white;
   }
-  input {
-    @apply border-white;
-  }
+
   form {
     @apply rounded-lg;
     @apply w-1/2;

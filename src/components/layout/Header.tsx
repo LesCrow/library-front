@@ -8,7 +8,8 @@ import useModal from "../modal/useModal";
 import iconLivres from "../../../public/icone-livres.png";
 import { slide as Menu } from "react-burger-menu";
 import Modal from "../modal/Modal";
-import BurgerMenu from "./BurgerMenu";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Header() {
   // Burger Menu
@@ -17,14 +18,16 @@ function Header() {
     setIsOpen(!isOpen);
   };
 
-  // Modal - Form
+  // Modal form
   const { isShowing: isLoginFormShowed, toggle: toggleLoginForm } = useModal();
+
   const {
     isShowing: isRegistrationFormShowed,
     toggle: toggleRegistrationForm,
   } = useModal();
 
-  const { register, handleSubmit, reset, formState } = useForm<TUser>();
+  const { register, handleSubmit, reset, formState, getValues } =
+    useForm<TUser>();
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -37,6 +40,13 @@ function Header() {
 
   const client = useQueryClient();
 
+  // Toastify
+  const notify = (message: string) =>
+    toast.success(message, {
+      position: "top-center",
+      theme: "dark",
+    });
+
   const onSubmit = (user: TUser) => {
     axios
       .post(urlPostUser, {
@@ -44,6 +54,7 @@ function Header() {
         password: user.password,
       })
       .then(() => client.invalidateQueries);
+    notify(`Welcome ${getValues("email")} !`);
   };
 
   return (
@@ -55,7 +66,7 @@ function Header() {
         <div className="flex">
           <button
             className="whitespace-nowrap text-white border h-10  rounded-md w-28 "
-            onClick={toggleLoginForm}
+            onClick={toggleRegistrationForm}
           >
             Sign up
           </button>
@@ -68,42 +79,85 @@ function Header() {
         </div>
       </div>
 
-      <h1 className="text-center my-5 m-auto py-5 ">
+      <h1 className="text-center mb-10 m-auto py-5 ">
         Welcome to the Wild Library
       </h1>
-      {/* <button onClick={toggleRegistrationForm}>Register</button> */}
 
       <img src={banniere.src} alt="library" className="h-1/6" />
+      <ToastContainer />
 
       {/* Modal */}
-      <>
+      {/* <>
         <div>
           <Modal
             isShowing={isLoginFormShowed}
             hide={toggleLoginForm}
-            title="Sign up"
+            title="SIGN IN"
           >
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="form-group ">
+            <form
+              // onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col    h-80 w-80 justify-around m-auto items-center"
+            >
+              <div className="flex flex-col mt-5">
                 <input
-                  className="my-2 rounded-full"
+                  className="my-2 rounded-full border border-[#1F293D] h-10 text-center"
                   type="text"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
 
                 <input
-                  className="rounded-full"
-                  type="text"
+                  className="rounded-full border border-[#1F293D] h-10 text-center mt-2"
+                  type="password"
                   placeholder="Password"
                   {...register("password", { required: true })}
                 />
               </div>
-              <div className="form-group flex justify-center my-">
+              <div className=" ">
                 <input
-                  className="rounded-full border w-16"
+                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] "
                   type="submit"
-                  value="Submit"
+                  value="Sign In"
+                  onClick={() => notify()}
+                />
+              </div>
+              <ToastContainer />
+            </form>
+          </Modal>
+        </div>
+      </> */}
+
+      <>
+        <div>
+          <Modal
+            isShowing={isRegistrationFormShowed}
+            hide={toggleRegistrationForm}
+            title="SIGN UP"
+          >
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col h-60 w-60 justify-around m-auto items-center"
+            >
+              <div className="flex flex-col mt-5">
+                <input
+                  className="my-2 rounded-full border border-[#1F293D] h-10 text-center"
+                  type="text"
+                  placeholder="Email"
+                  {...register("email", { required: true })}
+                />
+
+                <input
+                  className="rounded-full border border-[#1F293D] h-10 text-center mt-2"
+                  type="password"
+                  placeholder="Password"
+                  {...register("password", { required: true })}
+                />
+              </div>
+              <div className=" ">
+                <input
+                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] "
+                  type="submit"
+                  value="Sign Up"
                 />
               </div>
             </form>
