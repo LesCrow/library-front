@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { TAuthor } from "../../types/globals";
+import { TAuthor } from "../../../types/globals";
 
 function FormNewAuthor() {
   const { register, handleSubmit } = useForm<TAuthor>();

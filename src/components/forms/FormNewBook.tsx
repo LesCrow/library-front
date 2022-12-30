@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { TAuthor, TBook, TGenres } from "../../types/globals";
+import { TAuthor, TBook, TGenres } from "../../../types/globals";
 
 interface IProps {
   allAuthors: TAuthor[];

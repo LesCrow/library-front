@@ -1,5 +1,5 @@
 import React from "react";
-import banniere from "../../public/library-banniere.jpg";
+import banniere from "../../../public/library-banniere.jpg";
 
 function Header() {
   return (

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { TBook } from "../../types/globals";
 
 interface IProps {
   isShowing: boolean;
@@ -20,9 +19,9 @@ const Modal = ({
     ? ReactDOM.createPortal(
         <>
           {/* <div className="modal-overlay fixed top-0 left-0 w-full h-full z-50 "> */}
-          <div className="fixed top-0 left-0 z-20 w-full h-full overflow-x-hidden overflow-y-auto outline-none flex items-center">
-            <div className=" bg-red-400  z-0 relative m-auto border rounded-md max-w[500px] w-[80%] p-5">
-              <div className="flex justify-between items-center">
+          <div className="fixed top-0 left-0   w-full h-full overflow-x-hidden overflow-y-auto outline-none flex items-center">
+            <div className=" bg-red-400 relative m-auto border rounded-md max-w[500px] w-[80%] p-5">
+              <div className="flex justify-between items-center ">
                 <h4>{title}</h4>
                 <button
                   type="button"

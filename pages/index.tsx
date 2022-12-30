@@ -1,16 +1,16 @@
 import axios from "axios";
 import Head from "next/head";
-import Header from "../src/components/Header";
+import Header from "../src/components/layout/Header";
 import Bibliotheque from "../src/components/Display/Bibliotheque";
 import Authors from "../src/components/Display/Authors";
 import { useQuery, useQueryClient } from "react-query";
 import Genre from "../src/components/Display/Genre";
 import { useState, useEffect } from "react";
-import FormNewBook from "../src/components/FormNewBook";
-import FormNewAuthor from "../src/components/FormNewAuthor";
-import FormNewGenre from "../src/components/FormNewGenre";
-import useModal from "../src/components/useModal";
-import Modal from "../src/components/Modal";
+import FormNewBook from "../src/components/forms/FormNewAuthor";
+import FormNewAuthor from "../src/components/forms/FormNewGenre";
+import FormNewGenre from "../src/components/forms/FormNewGenre";
+import useModal from "../src/components/modal/useModal";
+import Modal from "../src/components/modal/Modal";
 import { useForm } from "react-hook-form";
 import { TUser } from "../types/globals";
 
@@ -130,7 +130,9 @@ export default function Home() {
           />
         </Head>
 
-        <main className="bg-[#1F293D] h-full">
+        <main
+          className={`bg-[#1F293D] h-full ${isLoginFormShowed && "blur-sm"}`}
+        >
           {/* Modal */}
           <>
             <div>
