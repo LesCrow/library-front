@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        marker: ["Permanent Marker"],
+        montserrat: ["Montserrat"],
         roboto: ["Roboto"],
       },
       colors: {

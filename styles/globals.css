@@ -8,7 +8,7 @@
 @layer base {
   h1 {
     @apply text-white;
-    @apply font-marker;
+    @apply font-montserrat;
     @apply text-5xl;
   }
 
@@ -31,8 +31,6 @@
     @apply border-white;
   }
   form {
-    @apply border;
-    @apply border-black;
     @apply rounded-lg;
     @apply w-1/2;
   }
