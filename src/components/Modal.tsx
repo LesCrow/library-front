@@ -9,7 +9,13 @@ interface IProps {
   children: any;
 }
 
-const Modal = ({ isShowing, hide, title, ...props }: IProps) =>
+const Modal = ({
+  isShowing,
+  hide,
+  title,
+
+  ...props
+}: IProps) =>
   isShowing
     ? ReactDOM.createPortal(
         <>

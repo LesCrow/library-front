@@ -14,7 +14,7 @@ import Modal from "../src/components/Modal";
 import { useForm } from "react-hook-form";
 import { TUser } from "../types/globals";
 
-// Get books, authors & collections
+// Get books, authors & genres
 const getAllBooks = async () => {
   try {
     const allBooks = await axios.get("http://localhost:5000/api/v1/books");
@@ -33,27 +33,31 @@ const getAllAuthors = async () => {
   }
 };
 
-const getAllCollections = async () => {
+const getAllGenres = async () => {
   try {
-    const allCollections = await axios.get(
-      "http://localhost:5000/api/v1/collections"
-    );
-    return allCollections.data;
+    const allGenres = await axios.get("http://localhost:5000/api/v1/genres");
+    return allGenres.data;
   } catch (error) {
     console.log(error);
   }
 };
 
 export default function Home() {
-  // Modal
+  // Modal - Form
   const { isShowing: isLoginFormShowed, toggle: toggleLoginForm } = useModal();
   const {
     isShowing: isRegistrationFormShowed,
     toggle: toggleRegistrationForm,
   } = useModal();
 
-  // Form
-  const { register, handleSubmit } = useForm<TUser>();
+  const { register, handleSubmit, reset, formState } = useForm<TUser>();
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+      toggleLoginForm();
+    }
+  }, [formState, reset]);
 
   const urlPostUser = "http://localhost:5000/api/v1/auth/signup";
 
@@ -99,7 +103,7 @@ export default function Home() {
   // UseQuery
   const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
   const { data: allAuthors } = useQuery("authors", getAllAuthors);
-  const { data: allCollections } = useQuery("collections", getAllCollections);
+  const { data: allGenres } = useQuery("genres", getAllGenres);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -130,12 +134,14 @@ export default function Home() {
           {/* Modal */}
           <>
             <div>
-              <button onClick={toggleLoginForm}>Login</button>
+              <button className="text-white" onClick={toggleLoginForm}>
+                Sign up
+              </button>
               {/* <button onClick={toggleRegistrationForm}>Register</button> */}
               <Modal
                 isShowing={isLoginFormShowed}
                 hide={toggleLoginForm}
-                title="Login"
+                title="Sign up"
               >
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="form-group">
@@ -184,10 +190,10 @@ export default function Home() {
             <Bibliotheque
               allBooks={allBooks}
               allAuthors={allAuthors}
-              allCollections={allCollections}
+              allGenres={allGenres}
             />
             <Authors allAuthors={allAuthors} />
-            <Genre allCollections={allCollections} />
+            <Genre allGenres={allGenres} />
             <h2 className="w-fit" onClick={() => setIsAddOpen(!isAddOpen)}>
               ADD +
             </h2>
@@ -203,10 +209,7 @@ export default function Home() {
               </div>
             )}
             {isAddBookOpen && (
-              <FormNewBook
-                allAuthors={allAuthors}
-                allCollections={allCollections}
-              />
+              <FormNewBook allAuthors={allAuthors} allGenres={allGenres} />
             )}
             {isAddAuthorOpen && <FormNewAuthor />}
             {isAddCollectionOpen && <FormNewGenre />}

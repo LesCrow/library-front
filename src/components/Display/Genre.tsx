@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { TCollection } from "../../../types/globals";
+import { TGenres } from "../../../types/globals";
 
 interface IProps {
-  allCollections: TCollection[];
+  allGenres: TGenres[];
 }
 
-function Genre({ allCollections }: IProps) {
+function Genre({ allGenres }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
@@ -13,8 +13,7 @@ function Genre({ allCollections }: IProps) {
         Genre
       </h2>
       <ul className="mb-10">
-        {isOpen &&
-          allCollections.map((collection) => <li>{collection.name}</li>)}
+        {isOpen && allGenres.map((genre) => <li>{genre.name}</li>)}
       </ul>
     </div>
   );

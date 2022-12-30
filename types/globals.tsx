@@ -2,10 +2,10 @@ export type TBook = {
   id: string;
   title: string;
   authorId: string;
-  collectionId: string;
+  genreId: string;
 };
 
-export type TCollection = {
+export type TGenres = {
   id: string;
   name: string;
 };
