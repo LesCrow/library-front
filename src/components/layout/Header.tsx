@@ -26,7 +26,8 @@ function Header() {
     toggle: toggleRegistrationForm,
   } = useModal();
 
-  const { register, handleSubmit, reset, formState } = useForm<TUser>();
+  const { register, handleSubmit, reset, formState, getValues } =
+    useForm<TUser>();
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -40,7 +41,12 @@ function Header() {
   const client = useQueryClient();
 
   // Toastify
-  const notify = () => toast("message");
+  const notify = (message: string) =>
+    toast.success(message, {
+      position: "top-center",
+      theme: "dark",
+    });
+
   const onSubmit = (user: TUser) => {
     axios
       .post(urlPostUser, {
@@ -48,7 +54,7 @@ function Header() {
         password: user.password,
       })
       .then(() => client.invalidateQueries);
-    notify();
+    notify(`Welcome ${getValues("email")} !`);
   };
 
   return (
@@ -73,11 +79,12 @@ function Header() {
         </div>
       </div>
 
-      <h1 className="text-center my-5 m-auto py-5 ">
+      <h1 className="text-center mb-10 m-auto py-5 ">
         Welcome to the Wild Library
       </h1>
 
       <img src={banniere.src} alt="library" className="h-1/6" />
+      <ToastContainer />
 
       {/* Modal */}
       {/* <>
@@ -129,7 +136,7 @@ function Header() {
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col    h-80 w-80 justify-around m-auto items-center"
+              className="flex flex-col h-60 w-60 justify-around m-auto items-center"
             >
               <div className="flex flex-col mt-5">
                 <input
@@ -154,7 +161,6 @@ function Header() {
                 />
               </div>
             </form>
-            <ToastContainer />
           </Modal>
         </div>
       </>
