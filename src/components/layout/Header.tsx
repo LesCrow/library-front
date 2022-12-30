@@ -1,15 +1,22 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import banniere from "../../../public/library-banniere.jpg";
 import { TUser } from "../../../types/globals";
 import useModal from "../modal/useModal";
 import iconLivres from "../../../public/icone-livres.png";
-
+import { slide as Menu } from "react-burger-menu";
 import Modal from "../modal/Modal";
+import BurgerMenu from "./BurgerMenu";
 
 function Header() {
+  // Burger Menu
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   // Modal - Form
   const { isShowing: isLoginFormShowed, toggle: toggleLoginForm } = useModal();
   const {
@@ -38,10 +45,13 @@ function Header() {
       })
       .then(() => client.invalidateQueries);
   };
+
   return (
-    <div className="bg-[#1F293D]  ">
+    <div className="bg-[#1F293D] flex flex-col ">
       <div className=" flex justify-between pt-10 px-20 ">
-        <img src={iconLivres.src} alt="icone-livres" className="h-10" />
+        {/* Menu burger */}
+        <img src={iconLivres.src} className="w-16" />
+
         <div className="flex">
           <button
             className="whitespace-nowrap text-white border h-10  rounded-md w-28 "
@@ -57,6 +67,7 @@ function Header() {
           </button>
         </div>
       </div>
+
       <h1 className="text-center my-5 m-auto py-5 ">
         Welcome to the Wild Library
       </h1>

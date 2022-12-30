@@ -35,7 +35,8 @@
     @apply rounded-lg;
     @apply w-1/2;
   }
-  /* * {
-    @apply font-roboto;
-  } */
+  .burger-button {
+    @apply w-16;
+    @apply m-10;
+  }
 }
