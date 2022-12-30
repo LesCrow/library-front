@@ -19,7 +19,8 @@
   p,
   th,
   td,
-  li {
+  li,
+  button {
     @apply text-white;
     @apply text-xl;
   }
@@ -34,7 +35,7 @@
     @apply rounded-lg;
     @apply w-1/2;
   }
-  * {
+  /* * {
     @apply font-roboto;
-  }
+  } */
 }

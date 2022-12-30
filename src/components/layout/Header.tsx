@@ -5,6 +5,7 @@ import { useQueryClient } from "react-query";
 import banniere from "../../../public/library-banniere.jpg";
 import { TUser } from "../../../types/globals";
 import useModal from "../modal/useModal";
+import iconLivres from "../../../public/icone-livres.png";
 
 import Modal from "../modal/Modal";
 
@@ -38,20 +39,34 @@ function Header() {
       .then(() => client.invalidateQueries);
   };
   return (
-    <div>
-      <div className="bg-[#1F293D] ">
-        <h1 className="text-center my-5 m-auto py-5 mt-16">
-          Welcome to the Wild Library
-        </h1>
-        <img src={banniere.src} alt="library" className="h-1/6" />
+    <div className="bg-[#1F293D]  ">
+      <div className=" flex justify-between pt-10 px-20 ">
+        <img src={iconLivres.src} alt="icone-livres" className="h-10" />
+        <div className="flex">
+          <button
+            className="whitespace-nowrap text-white border h-10  rounded-md w-28 "
+            onClick={toggleLoginForm}
+          >
+            Sign up
+          </button>
+          <button
+            className="hidden md:block text-white h-10 w-28 border rounded-md mx-5 "
+            onClick={toggleLoginForm}
+          >
+            Sign in
+          </button>
+        </div>
       </div>
+      <h1 className="text-center my-5 m-auto py-5 ">
+        Welcome to the Wild Library
+      </h1>
+      {/* <button onClick={toggleRegistrationForm}>Register</button> */}
+
+      <img src={banniere.src} alt="library" className="h-1/6" />
+
       {/* Modal */}
       <>
         <div>
-          <button className="text-white" onClick={toggleLoginForm}>
-            Sign up
-          </button>
-          {/* <button onClick={toggleRegistrationForm}>Register</button> */}
           <Modal
             isShowing={isLoginFormShowed}
             hide={toggleLoginForm}
@@ -82,26 +97,6 @@ function Header() {
               </div>
             </form>
           </Modal>
-          {/* <Modal
-                isShowing={isRegistrationFormShowed}
-                hide={toggleRegistrationForm}
-                title="Register"
-              >
-                <form>
-                  <div className="form-group">
-                    <input type="text" placeholder="Email Address" />
-                  </div>
-                  <div className="form-group">
-                    <input type="text" placeholder="Username" />
-                  </div>
-                  <div className="form-group">
-                    <input type="text" placeholder="Password" />
-                  </div>
-                  <div className="form-group">
-                    <input type="submit" value="Register" />
-                  </div>
-                </form>
-              </Modal> */}
         </div>
       </>
     </div>
