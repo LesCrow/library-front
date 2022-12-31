@@ -20,11 +20,7 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
   const authorName = (authorId: string) =>
     allAuthors.map((author) => {
       if (author.id === authorId) {
-        return (
-          <p>
-            {author.firstname} {author.lastname}
-          </p>
-        );
+        return <p>{author.name}</p>;
       }
     });
 
@@ -70,30 +66,29 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
         BIBLIOTHEQUE
       </h2>
       {isOpen && (
-        <table className="border-2  border-background w-5/6   my-5">
-          <tr className="border rounded-sm border-black">
-            <th className="text-background ">Title</th>
-            <th className="text-background ">Author</th>
-            <th className="text-background ">Genre</th>
+        <table className="border-2 bg-[#d4bfbf] border-background w-5/6   my-5">
+          <tr className="border  border-black">
+            <th className="text-background font-montserrat">TITLE</th>
+            <th className="text-background font-montserrat">AUTHOR</th>
+            <th className="text-background font-montserrat">GENRE</th>
           </tr>
           {allBooks.map((book) => (
-            <tr className="text-center" key={book.id}>
-              <td
-                className="cursor-pointer"
-                onClick={() => setOldBookData(book)}
-              >
-                {book.title}
-              </td>
+            <tr className="text-center font-montserrat" key={book.id}>
+              <td>{book.title}</td>
               <td>{authorName(book.authorId)}</td>
               <td>{genreName(book.genreId)}</td>
+
+              <td
+                onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}
+                className="cursor-pointer hover:text-green-800 hover:font-bold "
+              >
+                <span onClick={() => setOldBookData(book)}>Modify</span>
+              </td>
               <td
                 onClick={() => deleteOneBook(book.id)}
-                className=" text-red-600 cursor-pointer"
+                className=" text-red-600 cursor-pointer hover:font-bold "
               >
                 X
-              </td>
-              <td onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}>
-                Modify
               </td>
             </tr>
           ))}
@@ -101,9 +96,12 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
       )}
 
       {/* update form */}
-      <div className="flex w-full justify-center">
+      <div className="flex w-full justify-center mt-16 font-montserrat">
         {isupdateABookOpen && (
-          <form className="flex flex-col p-5" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="flex flex-col p-5 border-2 border-black bg-[#d4bfbf]"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <label>title</label>
             <input
               type="text"
@@ -118,9 +116,7 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
               {allAuthors.map(
                 (author) =>
                   oldBookData.authorId !== author.id && (
-                    <option value={author.id}>
-                      {author.firstname} {author.lastname}
-                    </option>
+                    <option value={author.id}>{author.name}</option>
                   )
               )}
             </select>
@@ -136,7 +132,11 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
                   )
               )}
             </select>
-            <button type="submit">Submit</button>
+            <input
+              type="submit"
+              value="Submit"
+              className=" cursor-pointer text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
+            />
           </form>
         )}
       </div>

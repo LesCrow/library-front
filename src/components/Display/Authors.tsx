@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TAuthor } from "../../../types/globals";
 import { useQueryClient } from "react-query";
-import axios, { all } from "axios";
+import axios from "axios";
 
 interface IProps {
   allAuthors: TAuthor[];
@@ -27,8 +27,14 @@ function Authors({ allAuthors }: IProps) {
       <ul className="">
         {isOpen &&
           allAuthors.map((author) => (
-            <li>
-              {author.firstname} {author.lastname}
+            <li className="font-montserrat list-disc  flex justify-between">
+              {author.name}{" "}
+              <button
+                className="text-red-600"
+                onClick={() => deleteOneAuthor(author.id)}
+              >
+                X
+              </button>
             </li>
           ))}
         <br />

@@ -10,7 +10,7 @@ interface IProps {
 }
 
 function FormNewBook({ allAuthors, allGenres }: IProps) {
-  const { register, handleSubmit } = useForm<TBook>();
+  const { register, handleSubmit, getValues } = useForm<TBook>();
   const client = useQueryClient();
 
   const urlPost = "http://localhost:5000/api/v1/books";
@@ -24,6 +24,7 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
       })
       .then(() => client.invalidateQueries("book"));
   };
+  console.log(getValues());
 
   return (
     <div className="w-full flex justify-center">
@@ -47,7 +48,7 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
         >
           {allAuthors.map((item) => (
             <option value={item.id} className="font-montserrat">
-              {item.firstname} {item.lastname}
+              {item.name}
             </option>
           ))}
         </select>
@@ -61,9 +62,9 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
           ))}
         </select>
         <input
-          type="button"
+          type="submit"
           value="Submit"
-          className="text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
+          className=" cursor-pointer text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
         />
       </form>
     </div>

@@ -12,8 +12,7 @@ export type TGenres = {
 
 export type TAuthor = {
   id: string;
-  firstname: string;
-  lastname: string | null;
+  name: string;
 };
 
 export type TUser = {

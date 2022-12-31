@@ -54,7 +54,7 @@ function Add({ allAuthors, allGenres }: IProps) {
             A BOOK
           </p>
           <p
-            className="text-background font-montserrat cursor-pointer hover:underline ml-16"
+            className="text-background font-montserrat cursor-pointer hover:underline "
             onClick={() => setIsAddAuthorOpen(!isAddAuthorOpen)}
           >
             AN AUTHOR
@@ -63,7 +63,7 @@ function Add({ allAuthors, allGenres }: IProps) {
             className="text-background font-montserrat cursor-pointer hover:underline"
             onClick={() => setIsAddCollectionOpen(!isAddCollectionOpen)}
           >
-            A COLLECTION
+            A GENRE
           </p>
         </div>
       )}

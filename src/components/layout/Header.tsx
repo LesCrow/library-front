@@ -79,9 +79,7 @@ function Header() {
         </div>
       </div>
 
-      <h1 className="text-center mb-10 m-auto py-10 ">
-        Welcome to the Wild Library
-      </h1>
+      <h1 className="text-center mb-10 m-auto py-10 ">The Wild Library</h1>
 
       <img src={banniere.src} alt="library" className="h-1/6" />
       <ToastContainer />
@@ -155,7 +153,7 @@ function Header() {
               </div>
               <div className=" ">
                 <input
-                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] "
+                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433]  "
                   type="submit"
                   value="Sign Up"
                 />

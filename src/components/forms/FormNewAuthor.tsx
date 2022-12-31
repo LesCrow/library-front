@@ -14,8 +14,7 @@ function FormNewAuthor() {
   const onSubmit = (author: TAuthor) => {
     axios
       .post(urlPost, {
-        firstname: author.firstname,
-        lastname: author.lastname,
+        name: author.name,
       })
       .then(() => client.invalidateQueries("author"));
   };
@@ -29,17 +28,11 @@ function FormNewAuthor() {
         <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
           ADD AN AUTHOR
         </h3>
-        <label className="my-5 m-auto font-montserrat">First name</label>
+        <label className="my-5 m-auto font-montserrat">Name</label>
         <input
           className="w-[80%] rounded-full m-auto font-montserrat text-center "
           type="text"
-          {...register("firstname", { required: true })}
-        />
-        <label className="my-5 m-auto  font-montserrat">Last name</label>
-        <input
-          className="w-[80%] rounded-full m-auto font-montserrat text-center"
-          type="text"
-          {...register("lastname", { required: false })}
+          {...register("name", { required: true })}
         />
 
         <input
