@@ -16,6 +16,10 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
   // to display bibliothèque
   const [isOpen, setIsOpen] = useState(false);
 
+  const closeBibliotheque = () => {
+    setIsOpen(!isOpen);
+  };
+
   // To display author first and last name
   const authorName = (authorId: string) =>
     allAuthors.map((author) => {
@@ -71,6 +75,13 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
             <th className="text-background font-montserrat">TITLE</th>
             <th className="text-background font-montserrat">AUTHOR</th>
             <th className="text-background font-montserrat">GENRE</th>
+            <th></th>
+            <th
+              onClick={closeBibliotheque}
+              className="font-montserrat text-2xl cursor-pointer"
+            >
+              x
+            </th>
           </tr>
           {allBooks.map((book) => (
             <tr className="text-center font-montserrat" key={book.id}>
@@ -82,7 +93,7 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
                 onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}
                 className="cursor-pointer hover:text-green-800 hover:font-bold "
               >
-                <span onClick={() => setOldBookData(book)}>Modify</span>
+                <span onClick={() => setOldBookData(book)}>Update</span>
               </td>
               <td
                 onClick={() => deleteOneBook(book.id)}
@@ -96,21 +107,28 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
       )}
 
       {/* update form */}
-      <div className="flex w-full justify-center mt-16 font-montserrat">
+      <div className="w-full flex justify-center">
         {isupdateABookOpen && (
           <form
-            className="flex flex-col p-5 border-2 border-black bg-[#d4bfbf]"
+            className="flex flex-col bg-[#d4bfbf] border-2 border-black"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <label>title</label>
+            <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
+              UPDATE A BOOK
+            </h3>
+            <label className="my-5 m-auto font-montserrat">Title</label>
             <input
+              className=" w-[80%] rounded-full m-auto font-montserrat text-center"
               type="text"
               placeholder={oldBookData.title}
               {...register("title", { required: true })}
             />
-            <label>author</label>
-            <select {...register("authorId", { required: true })}>
-              <option value={oldBookData.authorId}>
+            <label className="my-5 m-auto  font-montserrat">Author</label>
+            <select
+              className="w-[80%] h-6 m-auto rounded-full bg-white font-montserrat text-center"
+              {...register("authorId", { required: true })}
+            >
+              <option className="font-montserrat" value={oldBookData.authorId}>
                 {authorName(oldBookData.authorId)}
               </option>
               {allAuthors.map(
@@ -120,9 +138,12 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
                   )
               )}
             </select>
-            <label>genre</label>
-            <select {...register("genreId", { required: true })}>
-              <option value={oldBookData.genreId}>
+            <label className="my-5 m-auto font-montserrat">Genre</label>
+            <select
+              className="w-[80%] h-6 m-auto rounded-full bg-white font-montserrat text-center"
+              {...register("genreId", { required: true })}
+            >
+              <option className="font-montserrat" value={oldBookData.genreId}>
                 {genreName(oldBookData.genreId)}
               </option>
               {allGenres.map(
