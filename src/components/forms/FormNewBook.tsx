@@ -28,6 +28,7 @@ function FormNewBook({
         title: book.title,
         authorId: book.authorId,
         genreId: book.genreId,
+        alreadyRead: book.alreadyRead,
       })
       .then(() => client.invalidateQueries("book"));
   };
@@ -77,6 +78,20 @@ function FormNewBook({
             <option value={item.id}>{item.name}</option>
           ))}
         </select>
+        <div className="flex flex-col items-center mt-8">
+          <p className="font-montserrat">Is already Read ?</p>
+          <div className="mt-4 flex w-1/2  justify-around">
+            <div>
+              <input type="radio" name="isAlreadyRead" value="False" />
+              <label className="font-montserrat">False</label>
+            </div>
+            <div>
+              <input type="radio" name="isAlreadyRead" value="True" />
+              <label className="font-montserrat">True</label>
+            </div>
+          </div>
+        </div>
+
         <input
           type="submit"
           value="Submit"
