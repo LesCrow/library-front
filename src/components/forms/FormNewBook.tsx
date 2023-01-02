@@ -40,12 +40,10 @@ function FormNewBook({
     <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col bg-[#d4bfbf] border-2 border-black"
+        className="flex flex-col bg-[#d4bfbf] border-2 border-black min-w-[300px]"
       >
         <div className="flex w-full justify-center relative">
-          <h3 className=" first-letter:text-center py-5 font-montserrat text-2xl  ">
-            ADD A BOOK
-          </h3>
+          <h3 className="  py-5 font-montserrat text-2xl  ">ADD A BOOK</h3>
           <p
             className=" absolute right-3 top-3 cursor-pointer"
             onClick={closeWindow}

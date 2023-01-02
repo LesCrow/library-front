@@ -32,7 +32,7 @@ function FormNewAuthor({ isAddAuthorOpen, setIsAddAuthorOpen }: IProps) {
     <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col bg-[#d4bfbf] border-2 border-black"
+        className="flex flex-col bg-[#d4bfbf] border-2 border-black min-w-[300px] "
       >
         <div className="relative">
           <h3 className=" w-full  text-center py-5 font-montserrat text-2xl  ">
