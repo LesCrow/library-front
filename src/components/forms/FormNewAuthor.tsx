@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { TAuthor } from "../../../types/globals";
 
-function FormNewAuthor() {
+interface IProps {
+  isAddAuthorOpen: boolean;
+  setIsAddAuthorOpen: Function;
+}
+
+function FormNewAuthor({ isAddAuthorOpen, setIsAddAuthorOpen }: IProps) {
   const { register, handleSubmit } = useForm<TAuthor>();
 
   const urlPost = "http://localhost:5000/api/v1/authors";
@@ -19,15 +24,27 @@ function FormNewAuthor() {
       .then(() => client.invalidateQueries("author"));
   };
 
+  const closeWindow = () => {
+    setIsAddAuthorOpen(!isAddAuthorOpen);
+  };
+
   return (
     <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col bg-[#d4bfbf] border-2 border-black"
       >
-        <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
-          ADD AN AUTHOR
-        </h3>
+        <div className="relative">
+          <h3 className=" w-full  text-center py-5 font-montserrat text-2xl  ">
+            ADD AN AUTHOR
+          </h3>
+          <p
+            className=" absolute right-3 top-3 cursor-pointer"
+            onClick={closeWindow}
+          >
+            X
+          </p>
+        </div>
         <label className="my-5 m-auto font-montserrat">Name</label>
         <input
           className="w-[80%] rounded-full m-auto font-montserrat text-center "

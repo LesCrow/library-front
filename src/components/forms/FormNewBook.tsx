@@ -7,10 +7,17 @@ import { TAuthor, TBook, TGenres } from "../../../types/globals";
 interface IProps {
   allAuthors: TAuthor[];
   allGenres: TGenres[];
+  isAddBookOpen: boolean;
+  setIsAddBookOpen: Function;
 }
 
-function FormNewBook({ allAuthors, allGenres }: IProps) {
-  const { register, handleSubmit, getValues } = useForm<TBook>();
+function FormNewBook({
+  allAuthors,
+  allGenres,
+  isAddBookOpen,
+  setIsAddBookOpen,
+}: IProps) {
+  const { register, handleSubmit } = useForm<TBook>();
   const client = useQueryClient();
 
   const urlPost = "http://localhost:5000/api/v1/books";
@@ -24,7 +31,10 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
       })
       .then(() => client.invalidateQueries("book"));
   };
-  console.log(getValues());
+
+  const closeWindow = () => {
+    setIsAddBookOpen(!isAddBookOpen);
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -32,9 +42,17 @@ function FormNewBook({ allAuthors, allGenres }: IProps) {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col bg-[#d4bfbf] border-2 border-black"
       >
-        <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
-          ADD A BOOK
-        </h3>
+        <div className="flex w-full justify-center relative">
+          <h3 className=" first-letter:text-center py-5 font-montserrat text-2xl  ">
+            ADD A BOOK
+          </h3>
+          <p
+            className=" absolute right-3 top-3 cursor-pointer"
+            onClick={closeWindow}
+          >
+            X
+          </p>
+        </div>
         <label className="my-5 m-auto font-montserrat">Title</label>
         <input
           className=" w-[80%] rounded-full m-auto font-montserrat text-center"

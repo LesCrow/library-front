@@ -22,10 +22,10 @@ function Genre({ allGenres }: IProps) {
         className="text-background font-montserrat text-3xl w-fit cursor-pointer hover:underline"
         onClick={() => setIsOpen(!isOpen)}
       >
-        GENRE
+        GENRES
       </h2>
       <ul className="pt-5">
-        {isOpen &&
+        {isOpen || allGenres.length > 0 ? (
           allGenres.map((genre) => (
             <li className="font-montserrat w-full flex justify-between">
               {genre.name}{" "}
@@ -36,7 +36,10 @@ function Genre({ allGenres }: IProps) {
                 X
               </button>
             </li>
-          ))}
+          ))
+        ) : (
+          <p className="font-montserrat text-center">No Genres</p>
+        )}
       </ul>
       <br />
     </div>

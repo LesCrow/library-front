@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { TGenres } from "../../../types/globals";
 
-function FormNewGenre() {
+interface IProps {
+  isAddGenreOpen: boolean;
+  setIsAddGenreOpen: Function;
+}
+
+function FormNewGenre({ isAddGenreOpen, setIsAddGenreOpen }: IProps) {
   const { register, handleSubmit } = useForm<TGenres>();
 
   const urlPost = "http://localhost:5000/api/v1/genres";
@@ -19,15 +24,27 @@ function FormNewGenre() {
       .then(() => client.invalidateQueries("genres"));
   };
 
+  const closeWindow = () => {
+    setIsAddGenreOpen(!isAddGenreOpen);
+  };
+
   return (
     <div className="w-full flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col bg-[#d4bfbf] border-2 border-black"
       >
-        <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
-          ADD A COLLECTION
-        </h3>
+        <div className="flex justify-center relative w-full">
+          <h3 className="w-full  text-center py-5 font-montserrat text-2xl  ">
+            ADD A GENRE
+          </h3>
+          <p
+            className=" absolute right-3 top-3 cursor-pointer"
+            onClick={closeWindow}
+          >
+            X
+          </p>
+        </div>
         <label className="my-5 m-auto font-montserrat">Name</label>
         <input
           className="w-[80%] rounded-full m-auto font-montserrat text-center "

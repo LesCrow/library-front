@@ -13,28 +13,28 @@ function Add({ allAuthors, allGenres }: IProps) {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
   const [isAddAuthorOpen, setIsAddAuthorOpen] = useState(false);
-  const [isAddCollectionOpen, setIsAddCollectionOpen] = useState(false);
+  const [isAddGenreOpen, setIsAddGenreOpen] = useState(false);
 
   useEffect(() => {
     isAddBookOpen && setIsAddAuthorOpen(false);
-    setIsAddCollectionOpen(false);
+    setIsAddGenreOpen(false);
   }, [isAddBookOpen]);
 
   useEffect(() => {
     isAddAuthorOpen && setIsAddBookOpen(false);
-    setIsAddCollectionOpen(false);
+    setIsAddGenreOpen(false);
   }, [isAddAuthorOpen]);
 
   useEffect(() => {
-    isAddCollectionOpen && setIsAddBookOpen(false);
+    isAddGenreOpen && setIsAddBookOpen(false);
     setIsAddAuthorOpen(false);
-  }, [isAddCollectionOpen]);
+  }, [isAddGenreOpen]);
 
   useEffect(() => {
     !isAddOpen && setIsAddBookOpen(false);
     setIsAddAuthorOpen(false);
     setIsAddBookOpen(false);
-    setIsAddCollectionOpen(false);
+    setIsAddGenreOpen(false);
   }, [isAddOpen]);
   return (
     <div className=" w-full  flex flex-col items-center">
@@ -61,17 +61,32 @@ function Add({ allAuthors, allGenres }: IProps) {
           </p>
           <p
             className="text-background font-montserrat cursor-pointer hover:underline"
-            onClick={() => setIsAddCollectionOpen(!isAddCollectionOpen)}
+            onClick={() => setIsAddGenreOpen(!isAddGenreOpen)}
           >
             A GENRE
           </p>
         </div>
       )}
       {isAddBookOpen && (
-        <FormNewBook allAuthors={allAuthors} allGenres={allGenres} />
+        <FormNewBook
+          isAddBookOpen={isAddBookOpen}
+          setIsAddBookOpen={setIsAddBookOpen}
+          allAuthors={allAuthors}
+          allGenres={allGenres}
+        />
       )}
-      {isAddAuthorOpen && <FormNewAuthor />}
-      {isAddCollectionOpen && <FormNewGenre />}
+      {isAddAuthorOpen && (
+        <FormNewAuthor
+          isAddAuthorOpen={isAddAuthorOpen}
+          setIsAddAuthorOpen={setIsAddAuthorOpen}
+        />
+      )}
+      {isAddGenreOpen && (
+        <FormNewGenre
+          isAddGenreOpen={isAddGenreOpen}
+          setIsAddGenreOpen={setIsAddGenreOpen}
+        />
+      )}
     </div>
   );
 }
