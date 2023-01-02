@@ -60,6 +60,8 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
       .then(() => client.invalidateQueries("book"));
   };
 
+  console.log(allBooks);
+
   return (
     <div className="w-full flex flex-col items-center py-10">
       {/* Bibliothèque table */}
@@ -75,6 +77,8 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
             <th className="text-background font-montserrat">TITLE</th>
             <th className="text-background font-montserrat">AUTHOR</th>
             <th className="text-background font-montserrat">GENRE</th>
+            <th className="text-background font-montserrat">ALREADY READ</th>
+
             <th></th>
             <th
               onClick={closeBibliotheque}
@@ -88,6 +92,7 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
               <td>{book.title}</td>
               <td>{authorName(book.authorId)}</td>
               <td>{genreName(book.genreId)}</td>
+              {book.alreadyRead ? <td>True</td> : <td>False</td>}
 
               <td
                 onClick={() => setIsUpdateABookOpen(!isupdateABookOpen)}
