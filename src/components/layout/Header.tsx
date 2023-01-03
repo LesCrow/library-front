@@ -139,7 +139,7 @@ function Header() {
               <div className="flex flex-col mt-5">
                 <input
                   className="my-2 rounded-full border border-[#1F293D] h-10 text-center"
-                  type="text"
+                  type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />

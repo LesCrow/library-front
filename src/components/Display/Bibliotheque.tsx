@@ -60,8 +60,6 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
       .then(() => client.invalidateQueries("book"));
   };
 
-  console.log(allBooks);
-
   return (
     <div className="w-full flex flex-col items-center py-10">
       {/* Bibliothèque table */}

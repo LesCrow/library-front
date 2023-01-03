@@ -17,7 +17,7 @@ function FormNewBook({
   isAddBookOpen,
   setIsAddBookOpen,
 }: IProps) {
-  const { register, handleSubmit } = useForm<TBook>();
+  const { register, handleSubmit, getValues } = useForm<TBook>();
   const client = useQueryClient();
 
   const urlPost = "http://localhost:5000/api/v1/books";
@@ -28,7 +28,7 @@ function FormNewBook({
         title: book.title,
         authorId: book.authorId,
         genreId: book.genreId,
-        alreadyRead: book.alreadyRead,
+        alreadyRead: book.alreadyRead === "0" ? false : true,
       })
       .then(() => client.invalidateQueries("book"));
   };
@@ -82,11 +82,21 @@ function FormNewBook({
           <p className="font-montserrat">Is already Read ?</p>
           <div className="mt-4 flex w-1/2  justify-around">
             <div>
-              <input type="radio" name="isAlreadyRead" value="False" />
+              <input
+                type="radio"
+                value={0}
+                {...register("alreadyRead", {
+                  required: true,
+                })}
+              />
               <label className="font-montserrat">False</label>
             </div>
             <div>
-              <input type="radio" name="isAlreadyRead" value="True" />
+              <input
+                value={1}
+                type="radio"
+                {...register("alreadyRead", { required: true })}
+              />
               <label className="font-montserrat">True</label>
             </div>
           </div>

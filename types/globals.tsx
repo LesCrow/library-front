@@ -3,7 +3,7 @@ export type TBook = {
   title: string;
   authorId: string;
   genreId: string;
-  alreadyRead: boolean;
+  alreadyRead: string;
 };
 
 export type TGenres = {

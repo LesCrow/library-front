@@ -1,17 +1,10 @@
 import axios from "axios";
 import Head from "next/head";
-import Header from "../src/components/layout/Header";
 import Bibliotheque from "../src/components/Display/Bibliotheque";
 import Authors from "../src/components/Display/Authors";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import Genre from "../src/components/Display/Genre";
-import { useState, useEffect } from "react";
-import FormNewBook from "../src/components/forms/FormNewBook";
-import FormNewAuthor from "../src/components/forms/FormNewAuthor";
-import FormNewGenre from "../src/components/forms/FormNewGenre";
 
-import { useForm } from "react-hook-form";
-import { TUser } from "../types/globals";
 import Add from "../src/components/forms/Add";
 
 // Get books, authors & genres
@@ -45,10 +38,16 @@ const getAllGenres = async () => {
 export default function Home() {
   // UseQuery
   const { isLoading, data: allBooks, error } = useQuery("books", getAllBooks);
-  const { data: allAuthors } = useQuery("authors", getAllAuthors);
-  const { data: allGenres } = useQuery("genres", getAllGenres);
+  const { data: allAuthors, isLoading: authorLoading } = useQuery(
+    "authors",
+    getAllAuthors
+  );
+  const { data: allGenres, isLoading: genreLoading } = useQuery(
+    "genres",
+    getAllGenres
+  );
 
-  if (isLoading) {
+  if (isLoading || authorLoading || genreLoading) {
     return <p>Loading...</p>;
   }
 
