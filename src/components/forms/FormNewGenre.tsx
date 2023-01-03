@@ -54,7 +54,7 @@ function FormNewGenre({ isAddGenreOpen, setIsAddGenreOpen }: IProps) {
 
         <input
           type="submit"
-          value="submit"
+          value="Submit"
           className="text-xl text-white border w-[30%] rounded-full bg-blue-500 p-2 m-auto my-10"
         />
       </form>

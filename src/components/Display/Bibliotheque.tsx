@@ -70,13 +70,12 @@ function Bibliotheque({ allBooks, allAuthors, allGenres }: IProps) {
         BIBLIOTHEQUE
       </h2>
       {isOpen && (
-        <table className="border-2 bg-[#d4bfbf] border-background w-5/6   my-5">
+        <table className=" border-2 bg-[#d4bfbf] border-background w-5/6   my-5 ">
           <tr className="border  border-black">
             <th className="text-background font-montserrat">TITLE</th>
             <th className="text-background font-montserrat">AUTHOR</th>
             <th className="text-background font-montserrat">GENRE</th>
             <th className="text-background font-montserrat">ALREADY READ</th>
-
             <th></th>
             <th
               onClick={closeBibliotheque}

@@ -19,8 +19,8 @@ const Modal = ({
     ? ReactDOM.createPortal(
         <>
           {/* <div className="modal-overlay fixed top-0 left-0 w-full h-full z-50 "> */}
-          <div className="fixed top-0 left-0   w-full h-full overflow-x-hidden overflow-y-auto outline-none flex items-center  ">
-            <div className=" relative m-auto border-4 border-black  rounded-xl  w-[300px] h-[400px] bg-opacity-90 bg-[#d4bfbf] p-5 ">
+          <div className="backdrop-blur-sm fixed top-0 left-0   w-full h-full overflow-x-hidden overflow-y-auto outline-none flex items-center  ">
+            <div className="  relative m-auto border-4 border-black  rounded-xl  w-[300px] h-[400px] bg-opacity-90 bg-[#d4bfbf] p-5 ">
               <div className="flex justify-between  ">
                 <h4 className=" m-auto mt-10 text-4xl text-background">
                   {title}

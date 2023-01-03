@@ -16,6 +16,9 @@ function Authors({ allAuthors }: IProps) {
   };
 
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log(isOpen);
+
   return (
     <div>
       <h2
@@ -24,8 +27,12 @@ function Authors({ allAuthors }: IProps) {
       >
         AUTHORS
       </h2>
-      <ul className="">
-        {isOpen || allAuthors.length > 0 ? (
+      {isOpen && allAuthors.length === 0 && (
+        <p className="font-montserrat text-center">No authors</p>
+      )}
+
+      <ul>
+        {isOpen &&
           allAuthors.map((author) => (
             <li className="font-montserrat list-disc  flex justify-between">
               {author.name}{" "}
@@ -36,10 +43,7 @@ function Authors({ allAuthors }: IProps) {
                 X
               </button>
             </li>
-          ))
-        ) : (
-          <p className="font-montserrat text-center">No authors</p>
-        )}
+          ))}
         <br />
       </ul>
     </div>

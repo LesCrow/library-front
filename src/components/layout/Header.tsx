@@ -85,21 +85,21 @@ function Header() {
       <ToastContainer />
 
       {/* Modal */}
-      {/* <>
+      <>
         <div>
           <Modal
             isShowing={isLoginFormShowed}
             hide={toggleLoginForm}
-            title="SIGN IN"
+            title="Sign in"
           >
             <form
-              // onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col    h-80 w-80 justify-around m-auto items-center"
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col h-60 w-60 justify-around m-auto items-center"
             >
               <div className="flex flex-col mt-5">
                 <input
                   className="my-2 rounded-full border border-[#1F293D] h-10 text-center"
-                  type="text"
+                  type="email"
                   placeholder="Email"
                   {...register("email", { required: true })}
                 />
@@ -111,19 +111,17 @@ function Header() {
                   {...register("password", { required: true })}
                 />
               </div>
-              <div className=" ">
+              <div className="">
                 <input
-                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] "
+                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] cursor-pointer "
                   type="submit"
-                  value="Sign In"
-                  onClick={() => notify()}
+                  value="Sign in"
                 />
               </div>
-              <ToastContainer />
             </form>
           </Modal>
         </div>
-      </> */}
+      </>
 
       <>
         <div>
@@ -153,7 +151,7 @@ function Header() {
               </div>
               <div className=" ">
                 <input
-                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433]  "
+                  className="text-white font-bold rounded-full border w-24 h-12 bg-[#369433] cursor-pointer "
                   type="submit"
                   value="Sign Up"
                 />

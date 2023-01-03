@@ -17,7 +17,7 @@ function FormNewBook({
   isAddBookOpen,
   setIsAddBookOpen,
 }: IProps) {
-  const { register, handleSubmit, getValues } = useForm<TBook>();
+  const { register, handleSubmit } = useForm<TBook>();
   const client = useQueryClient();
 
   const urlPost = "http://localhost:5000/api/v1/books";
@@ -85,6 +85,7 @@ function FormNewBook({
               <input
                 type="radio"
                 value={0}
+                checked
                 {...register("alreadyRead", {
                   required: true,
                 })}
